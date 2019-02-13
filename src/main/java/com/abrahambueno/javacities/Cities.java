@@ -15,6 +15,7 @@ public class Cities {
     private int affordableIndex;
 
     public Cities() {
+        // default constructor
     }
 
     public Cities(String name, double homePrice, int affordableIndex) {
