@@ -23,18 +23,36 @@ public class CitiesMessageSender {
     public void sendMessage() {
         ArrayList<Cities> cities = new ArrayList<Cities>();
         cities.addAll(citiesrepos.findAll());
+        ArrayList<CitiesMessage> secretMessages = new ArrayList<CitiesMessage>();
+        ArrayList<CitiesMessage> cityOneMessages = new ArrayList<CitiesMessage>();
+        ArrayList<CitiesMessage> cityTwoMessages = new ArrayList<CitiesMessage>();
 
         for (Cities c : cities) {
             int rand = new Random().nextInt(10);
             boolean randBool = new Random().nextBoolean();
             final CitiesMessage message = new CitiesMessage(c.toString(), rand, randBool);
             if (randBool) {
-                log.info("Sending secret message ");
-                ct.convertAndSend(JavacitiesApplication.QUEUE_SECRET_MESSAGES, message);
+                secretMessages.add(message);
+            } else if (c.getAffordableIndex() < 6) {
+                cityOneMessages.add(message);
             } else {
-                log.info("Sending cities 1");
-                ct.convertAndSend(JavacitiesApplication.QUEUE_CITIES_ONE, message);
+                cityTwoMessages.add(message);
             }
+
+        }
+
+        for (CitiesMessage s : secretMessages) {
+            log.info("Sending secret message ");
+            ct.convertAndSend(JavacitiesApplication.QUEUE_SECRET_MESSAGES, s);
+        }
+        for (CitiesMessage one : cityOneMessages) {
+            log.info("Sending cities1 message ");
+            ct.convertAndSend(JavacitiesApplication.QUEUE_CITIES_ONE, one);
+        }
+
+        for (CitiesMessage two : cityTwoMessages) {
+            log.info("Sending cities2 message ");
+            ct.convertAndSend(JavacitiesApplication.QUEUE_CITIES_TWO, two);
         }
     }
 

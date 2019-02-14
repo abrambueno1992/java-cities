@@ -8,7 +8,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class CitiesMessageListener {
     @RabbitListener(queues = JavacitiesApplication.QUEUE_SECRET_MESSAGES)
-    public void receiveMessage(CitiesMessage cm) {
-        log.info("Received Message: {} " + cm.toString());
+    public void receiveSecretMessage(CitiesMessage cm) {
+        log.info("Received SECRET Message: {} " + cm.toString());
+    }
+
+    @RabbitListener(queues = JavacitiesApplication.QUEUE_CITIES_ONE)
+    public void receiveMessageOne(CitiesMessage cm) {
+        log.info("Received CITY ONE Message: {} " + cm.toString());
+    }
+
+    @RabbitListener(queues = JavacitiesApplication.QUEUE_CITIES_TWO)
+    public void receiveMessageTwo(CitiesMessage cm) {
+        log.info("Received CITY TWO Message: {} " + cm.toString());
     }
 }
