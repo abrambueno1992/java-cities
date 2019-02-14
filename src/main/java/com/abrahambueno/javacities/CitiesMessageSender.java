@@ -3,13 +3,12 @@ package com.abrahambueno.javacities;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 @Slf4j
-@Service
+//@Service
 public class CitiesMessageSender {
     private final RabbitTemplate ct;
     private final CitiesRepository citiesrepos;
